@@ -1,0 +1,11 @@
+FROM node AS builder
+WORKDIR /app
+COPY . .
+RUN npm install
+
+FROM node:20
+WORKDIR /app
+COPY --from=builder /app ./
+EXPOSE 3000
+ENTRYPOINT ["node"]
+CMD ["server.js", "development"]
